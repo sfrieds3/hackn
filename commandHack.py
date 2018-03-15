@@ -12,9 +12,6 @@ def initiate_client():
 
     stories = top_story_list.text.split(", ")
 
-
-    i = 0
-
     get_top(stories)
 
 def get_top(stories):
