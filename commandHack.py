@@ -3,7 +3,6 @@ import requests
 import time
 import re
 
-
 def initiate_client():
     top_story_list = requests.get(
         'https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty')
@@ -13,19 +12,25 @@ def initiate_client():
 
     stories = top_story_list.text.split(", ")
 
+
+    i = 0
+
+    get_top(stories)
+
+def get_top(stories):
+    num_stories = 25
+    i = 0
     base_url = 'https://hacker-news.firebaseio.com/v0/item/'
     postfix = '.json?print=pretty'
 
-    i = 0
-    while i < 10:
+    while i < num_stories:
         x = stories[i]
         x = re.sub("\D", "", x)
         url = base_url + x + postfix
         s = requests.get(url)
         print(s.text)
-        time.sleep(1)
+        time.sleep(0.1)
         i += 1
-
 
 if __name__ == "__main__":
     initiate_client()
