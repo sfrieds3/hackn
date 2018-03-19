@@ -12,6 +12,7 @@ class color:
     END = '\033[0m'
 
 
+# number of stories to retrieve, defaults to 30
 num_stories = 30
 
 
