@@ -57,3 +57,4 @@ if __name__ == "__main__":
         except TypeError:
             print("Error, please enter a number.")
     initiate_client()
+
