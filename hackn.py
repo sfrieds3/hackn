@@ -2,6 +2,7 @@
 import requests
 import time
 import re
+import sys
 
 
 class color:
@@ -11,10 +12,12 @@ class color:
     END = '\033[0m'
 
 
+num_stories = 30
+
+
 def initiate_client():
     top_story_list = requests.get(
         'https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty')
-    # print(top_story_list.text)
 
     stories = top_story_list.text.split(", ")
 
@@ -22,10 +25,11 @@ def initiate_client():
 
 
 def get_top(stories):
-    num_stories = 30
     i = 0
     base_url = 'https://hacker-news.firebaseio.com/v0/item/'
     postfix = '.json?print=pretty'
+
+    global num_stories
 
     while i < num_stories:
         x = re.sub("\D", "", stories[i])
@@ -42,5 +46,14 @@ def get_top(stories):
 
 
 if __name__ == "__main__":
+    """
+    TODO: read command line args
+    TODO: set number of posts to retrieve to number specified
+    TODO: if not specified, default to 30
+    """
+    if len(sys.argv) > 1:
+        try:
+            num_stories = int(sys.argv[1])
+        except TypeError:
+            print("Error, please enter a number.")
     initiate_client()
-
