@@ -47,11 +47,6 @@ def get_top(stories):
 
 
 if __name__ == "__main__":
-    """
-    TODO: read command line args
-    TODO: set number of posts to retrieve to number specified
-    TODO: if not specified, default to 30
-    """
     if len(sys.argv) > 1:
         try:
             num_stories = int(sys.argv[1])
