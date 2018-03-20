@@ -15,6 +15,9 @@ class color:
 # number of stories to retrieve, defaults to 30
 num_stories = 30
 
+# num comments to retrieve
+num_comments = 5
+
 
 def initiate_client():
     top_story_list = requests.get(
@@ -51,11 +54,16 @@ def get_url(item):
     return base_url + item_number + postfix
 
 
-def print_comments(id):
-    """
-    store
-    """
-    pass
+def print_comments(story):
+    i = 0
+    global num_comments
+
+    comment_id = story.get('kids')
+
+    while i < num_comments:
+        url = get_url(comment_id[i])
+        comment = requests.get(url).json()
+        print(comment)
 
 
 if __name__ == "__main__":
