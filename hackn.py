@@ -25,22 +25,16 @@ def initiate_client():
     get_top(stories)
 
 
-def get_url(item):
-    base_url = 'https://hacker-news.firebaseio.com/v0/item/'
-    postfix = '.json?print=pretty'
-    item_number = re.sub("\D", "", item)
-    return base_url + item_number + postfix
-
-
 def get_top(stories):
     i = 0
-
     global num_stories
 
     while i < num_stories:
+        num_string = ") "
         url = get_url(stories[i])
         story = requests.get(url).json()
-        print(color.BOLD + color.UNDERLINE + story.get('title') + color.END)
+        print(str(i) + num_string + color.BOLD + color.UNDERLINE
+              + story.get('title') + color.END)
         try:
             print(color.GREEN + story.get('url') + color.END)
         except TypeError:
@@ -50,7 +44,17 @@ def get_top(stories):
         i += 1
 
 
+def get_url(item):
+    base_url = 'https://hacker-news.firebaseio.com/v0/item/'
+    postfix = '.json?print=pretty'
+    item_number = re.sub("\D", "", item)
+    return base_url + item_number + postfix
+
+
 def print_comments(id):
+    """
+    store
+    """
     pass
 
 
