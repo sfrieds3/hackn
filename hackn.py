@@ -51,7 +51,7 @@ def get_top(stories):
 def get_url(item):
     base_url = 'https://hacker-news.firebaseio.com/v0/item/'
     postfix = '.json?print=pretty'
-    item_number = trim_id(item)
+    item_number = trim_id(str(item))
     return base_url + item_number + postfix
 
 
@@ -65,9 +65,9 @@ def print_comments(story):
         print("comment_id: ", comment_id)
         print("comment[i]:", comment_id[i])
         i = i + 1
-        # url = get_url(comment_id[i])
-        # comment = requests.get(url).json()
-        # print(comment)
+        url = get_url(comment_id[i])
+        comment = requests.get(url).json()
+        print(comment.get('text'))
 
 
 def trim_id(n):
