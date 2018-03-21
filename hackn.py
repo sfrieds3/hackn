@@ -38,11 +38,12 @@ def get_top(stories):
         story = requests.get(url).json()
         print(str(i) + num_string + color.BOLD + color.UNDERLINE
               + story.get('title') + color.END)
+        print("https://news.ycombinator.com/item?id=" + stories[i])
         try:
             print(color.GREEN + story.get('url') + color.END)
         except TypeError:
             pass
-        print()
+        print_comments(story)
         time.sleep(0.1)
         i += 1
 
@@ -50,7 +51,7 @@ def get_top(stories):
 def get_url(item):
     base_url = 'https://hacker-news.firebaseio.com/v0/item/'
     postfix = '.json?print=pretty'
-    item_number = re.sub("\D", "", item)
+    item_number = trim_id(item)
     return base_url + item_number + postfix
 
 
@@ -61,9 +62,16 @@ def print_comments(story):
     comment_id = story.get('kids')
 
     while i < num_comments:
-        url = get_url(comment_id[i])
-        comment = requests.get(url).json()
-        print(comment)
+        print("comment_id: ", comment_id)
+        print("comment[i]:", comment_id[i])
+        i = i + 1
+        # url = get_url(comment_id[i])
+        # comment = requests.get(url).json()
+        # print(comment)
+
+
+def trim_id(n):
+    return re.sub("\D", "", n)
 
 
 if __name__ == "__main__":
