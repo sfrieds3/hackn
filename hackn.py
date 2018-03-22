@@ -17,12 +17,20 @@ class color:
 num_stories = 30
 # num comments to retrieve
 num_comments = 5
-# port to connect to
-PORT = 9090
 
 
 class handler_class(BaseHTTPRequestHandler):
-    print("test")
+    def do_GET(self):
+        self.send_response(200)
+
+        self.send_header('Content-type', 'text/html')
+        self.end_headers()
+
+        # message back
+        message = "Hello World!"
+
+        self.wfile.write(bytes(message, "utf8"))
+        return
 
 
 def initiate_client():
@@ -34,7 +42,7 @@ def initiate_client():
 
 
 def run():
-    server_address = ('127.0.0.1', 8000)
+    server_address = ('127.0.0.1', 9090)
     httpd = HTTPServer(server_address, handler_class)
     httpd.serve_forever()
 
