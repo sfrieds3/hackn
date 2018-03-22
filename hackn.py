@@ -3,6 +3,7 @@ import requests
 import time
 import re
 import sys
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
 
 class color:
@@ -14,18 +15,28 @@ class color:
 
 # number of stories to retrieve, defaults to 30
 num_stories = 30
-
 # num comments to retrieve
 num_comments = 5
+# port to connect to
+PORT = 9090
+
+
+class handler_class(BaseHTTPRequestHandler):
+    print("test")
 
 
 def initiate_client():
     top_story_list = requests.get(
         'https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty')
-
+    run()
     stories = top_story_list.text.split(", ")
-
     get_top(stories)
+
+
+def run():
+    server_address = ('127.0.0.1', 8000)
+    httpd = HTTPServer(server_address, handler_class)
+    httpd.serve_forever()
 
 
 def get_top(stories):
@@ -62,12 +73,15 @@ def print_comments(story):
     comment_id = story.get('kids')
 
     while i < num_comments:
-        print("comment_id: ", comment_id)
-        print("comment[i]:", comment_id[i])
+        try:
+            print("comment_id: ", comment_id)
+            print("comment[i]:", comment_id[i])
+            url = get_url(comment_id[i])
+            comment = requests.get(url).json()
+            print(comment.get('text'))
+        except IndexError:
+            pass
         i = i + 1
-        url = get_url(comment_id[i])
-        comment = requests.get(url).json()
-        print(comment.get('text'))
 
 
 def trim_id(n):
