@@ -26,12 +26,10 @@ class handler_class(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'text/html')
         self.end_headers()
 
-        # message back
-        # message = "Hello World!"
 
-        # self.wfile.write(bytes(message, "utf8"))
+        out = get_top()
+        self.wfile.write(bytes(message, "utf8"))
 
-        get_top(self)
         return
 
 
@@ -45,9 +43,10 @@ def run():
     httpd.serve_forever()
 
 
-def get_top(handler):
+def get_top():
     i = 0
     global num_stories
+    res = []
 
     top_story_list = requests.get(
         'https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty')
@@ -57,18 +56,18 @@ def get_top(handler):
         num_string = ") "
         url = get_url(stories[i])
         story = requests.get(url).json()
-        p = str(story.get('title'))
-        handler.wfile.write(bytes(p, "utf8"))
-        # print(str(i) + num_string + color.BOLD + color.UNDERLINE
-              # + story.get('title') + color.END)
-        # print("https://news.ycombinator.com/item?id=" + stories[i])
-        # try:
-            # print(color.GREEN + story.get('url') + color.END)
-        # except TypeError:
-            # pass
-        # print_comments(story)
-        # time.sleep(0.1)
+        print(str(i) + num_string + color.BOLD + color.UNDERLINE
+              + story.get('title') + color.END)
+        print("https://news.ycombinator.com/item?id=" + stories[i])
+        try:
+            print(color.GREEN + story.get('url') + color.END)
+        except TypeError:
+            pass
+        print_comments(story)
+        time.sleep(0.1)
         i += 1
+
+    return ''.join(res)
 
 
 def get_url(item):
