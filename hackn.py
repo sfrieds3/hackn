@@ -47,8 +47,10 @@ def get_top():
         url = get_url(stories[i])
         story = requests.get(url).json()
         res.append(text_html(story.get('title')))
-        # TODO: links point back to this server, not to correct website
-        res.append(link_html(story.get('url'), story.get('url')))
+        try:
+            res.append(link_html(story.get('url'), story.get('url')))
+        except TypeError:
+            pass
         # print_comments(story)
         time.sleep(0.1)
         i += 1
