@@ -3,8 +3,8 @@ import requests
 import time
 import re
 import sys
-from http.server import BaseHTTPRequestHandler, HTTPServer
 from html import *
+from http.server import BaseHTTPRequestHandler, HTTPServer
 
 
 # number of stories to retrieve, defaults to 30
@@ -15,6 +15,7 @@ num_comments = 5
 
 class handler_class(BaseHTTPRequestHandler):
     def do_GET(self):
+        print(self)
         self.send_response(200)
 
         self.send_header('Content-type', 'text/html')
@@ -45,8 +46,8 @@ def get_top():
     while i < num_stories:
         url = get_url(stories[i])
         story = requests.get(url).json()
-        # TODO: turn this into proper html
         res.append(text_html(story.get('title')))
+        # TODO: links point back to this server, not to correct website
         res.append(link_html(story.get('url'), story.get('url')))
         # print_comments(story)
         time.sleep(0.1)

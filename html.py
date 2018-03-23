@@ -16,7 +16,7 @@ def end_html():
 def link_html(address, name):
     res = []
 
-    res.append('<a href=""')
+    res.append('<a href="')
     res.append(address)
     res.append('">')
     res.append(name)
