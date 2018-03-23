@@ -2,6 +2,9 @@ def init_html():
     res = []
 
     res.append('<html>')
+    res.append('<head>')
+    res.append('<link rel="stylesheet" href="styles.css">')
+    res.append('</head>')
     res.append('<body>')
     return ''.join(res)
 
