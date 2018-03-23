@@ -28,7 +28,7 @@ class handler_class(BaseHTTPRequestHandler):
 
 
         out = get_top()
-        self.wfile.write(bytes(message, "utf8"))
+        self.wfile.write(bytes(out, "utf8"))
 
         return
 
@@ -56,14 +56,17 @@ def get_top():
         num_string = ") "
         url = get_url(stories[i])
         story = requests.get(url).json()
-        print(str(i) + num_string + color.BOLD + color.UNDERLINE
-              + story.get('title') + color.END)
-        print("https://news.ycombinator.com/item?id=" + stories[i])
-        try:
-            print(color.GREEN + story.get('url') + color.END)
-        except TypeError:
-            pass
-        print_comments(story)
+        # TODO: turn this into proper html
+        res.append(story.get('title'))
+        res.append(story.get('url'))
+        # print(str(i) + num_string + color.BOLD + color.UNDERLINE
+              # + story.get('title') + color.END)
+        # print("https://news.ycombinator.com/item?id=" + stories[i])
+        # try:
+            # print(color.GREEN + story.get('url') + color.END)
+        # except TypeError:
+            # pass
+        # print_comments(story)
         time.sleep(0.1)
         i += 1
 
