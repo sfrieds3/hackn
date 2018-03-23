@@ -27,18 +27,16 @@ class handler_class(BaseHTTPRequestHandler):
         self.end_headers()
 
         # message back
-        message = "Hello World!"
+        # message = "Hello World!"
 
-        self.wfile.write(bytes(message, "utf8"))
+        # self.wfile.write(bytes(message, "utf8"))
+
+        get_top(self)
         return
 
 
-def initiate_client():
-    top_story_list = requests.get(
-        'https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty')
+def init():
     run()
-    stories = top_story_list.text.split(", ")
-    get_top(stories)
 
 
 def run():
@@ -47,23 +45,29 @@ def run():
     httpd.serve_forever()
 
 
-def get_top(stories):
+def get_top(handler):
     i = 0
     global num_stories
+
+    top_story_list = requests.get(
+        'https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty')
+    stories = top_story_list.text.split(", ")
 
     while i < num_stories:
         num_string = ") "
         url = get_url(stories[i])
         story = requests.get(url).json()
-        print(str(i) + num_string + color.BOLD + color.UNDERLINE
-              + story.get('title') + color.END)
-        print("https://news.ycombinator.com/item?id=" + stories[i])
-        try:
-            print(color.GREEN + story.get('url') + color.END)
-        except TypeError:
-            pass
-        print_comments(story)
-        time.sleep(0.1)
+        p = str(story.get('title'))
+        handler.wfile.write(bytes(p, "utf8"))
+        # print(str(i) + num_string + color.BOLD + color.UNDERLINE
+              # + story.get('title') + color.END)
+        # print("https://news.ycombinator.com/item?id=" + stories[i])
+        # try:
+            # print(color.GREEN + story.get('url') + color.END)
+        # except TypeError:
+            # pass
+        # print_comments(story)
+        # time.sleep(0.1)
         i += 1
 
 
@@ -102,5 +106,5 @@ if __name__ == "__main__":
             num_stories = int(sys.argv[1])
         except TypeError:
             print("Error, please enter a number.")
-    initiate_client()
+    init()
 
