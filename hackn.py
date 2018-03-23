@@ -6,13 +6,6 @@ import sys
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 
-class color:
-    GREEN = '\033[92m'
-    BOLD = '\033[1m'
-    UNDERLINE = '\033[4m'
-    END = '\033[0m'
-
-
 # number of stories to retrieve, defaults to 30
 num_stories = 30
 # num comments to retrieve
@@ -26,15 +19,10 @@ class handler_class(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'text/html')
         self.end_headers()
 
-
         out = get_top()
         self.wfile.write(bytes(out, "utf8"))
 
         return
-
-
-def init():
-    run()
 
 
 def run():
@@ -53,23 +41,27 @@ def get_top():
     stories = top_story_list.text.split(", ")
 
     while i < num_stories:
-        num_string = ") "
         url = get_url(stories[i])
         story = requests.get(url).json()
         # TODO: turn this into proper html
-        res.append(story.get('title'))
-        res.append(story.get('url'))
-        # print(str(i) + num_string + color.BOLD + color.UNDERLINE
-              # + story.get('title') + color.END)
-        # print("https://news.ycombinator.com/item?id=" + stories[i])
-        # try:
-            # print(color.GREEN + story.get('url') + color.END)
-        # except TypeError:
-            # pass
+        res.append(get_html(story.get('title')))
+        res.append(get_html(story.get('url')))
         # print_comments(story)
         time.sleep(0.1)
         i += 1
 
+    return ''.join(res)
+
+
+def get_html(s):
+    res = []
+    res.append('<html>')
+    res.append('<body>')
+    res.append('<p>')
+    res.append(s)
+    res.append('</p>')
+    res.append('</body>')
+    res.append('</html>')
     return ''.join(res)
 
 
@@ -108,5 +100,5 @@ if __name__ == "__main__":
             num_stories = int(sys.argv[1])
         except TypeError:
             print("Error, please enter a number.")
-    init()
+    run()
 
