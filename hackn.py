@@ -35,6 +35,7 @@ def get_top():
     i = 0
     global num_stories
     res = []
+    res.append(init_html())
 
     top_story_list = requests.get(
         'https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty')
@@ -44,24 +45,47 @@ def get_top():
         url = get_url(stories[i])
         story = requests.get(url).json()
         # TODO: turn this into proper html
-        res.append(get_html(story.get('title')))
-        res.append(get_html(story.get('url')))
+        res.append(text_html(story.get('title')))
+        res.append(link_html(story.get('url'), story.get('url')))
         # print_comments(story)
         time.sleep(0.1)
         i += 1
 
+    res.append(end_html())
     return ''.join(res)
 
 
-def get_html(s):
+def init_html():
     res = []
+
     res.append('<html>')
     res.append('<body>')
+    return ''.join(res)
+
+def end_html():
+    res = []
+
+    res.append('</body>')
+    res.append('</html>')
+    return ''.join(res)
+
+
+def link_html(address, name):
+    res = []
+
+    res.append('<a href=""')
+    res.append(address)
+    res.append('">')
+    res.append(name)
+    res.append('</a>')
+
+    return ''.join(res)
+
+def text_html(s):
+    res = []
     res.append('<p>')
     res.append(s)
     res.append('</p>')
-    res.append('</body>')
-    res.append('</html>')
     return ''.join(res)
 
 
