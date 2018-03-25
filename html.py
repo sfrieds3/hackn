@@ -22,7 +22,8 @@ def link_html(address, name):
 
     res.append('<a href="')
     res.append(address)
-    res.append('">')
+    res.append('" class="lnk"')
+    res.append('>')
     res.append(name)
     res.append('</a>')
 

@@ -1,5 +1,5 @@
 body {
-    background-color: black;
+    background-color: white;
 }
 
 h1 {
@@ -8,5 +8,26 @@ h1 {
 
 p {
     border: 1px solid powderblue;
-    color: red;
+    color: dimgray;
+}
+
+a.lnk:link
+{
+   color: #fb3f00;
+   text-decoration: none;
+}
+a.lnk:visited
+{
+   color: #fb3f00;
+   text-decoration: none;
+}
+a.lnk:hover
+{
+   color: #fb3f00;
+   text-decoration: none;
+}
+a.lnk:active
+{
+   color: #fb3f00;
+   text-decoration: none;
 }
