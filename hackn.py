@@ -15,16 +15,23 @@ num_comments = 5
 
 class handler_class(BaseHTTPRequestHandler):
     def do_GET(self):
-        print(self)
         self.send_response(200)
 
-        self.send_header('Content-type', 'text/html')
-        self.end_headers()
+        print("received new request")
+        print("path: " + self.path)
 
-        out = get_top()
-        self.wfile.write(bytes(out, "utf8"))
+        if self.path == "/":
+            print("true")
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+            out = get_top()
+            self.wfile.write(bytes(out, "utf8"))
 
-        return
+        if self.path == "/style.css":
+            self.send_header('Content-type', 'text/css')
+            self.end_headers()
+            with open('./style.css', 'r') as file:
+                self.wfile.write(bytes(file.read(), "utf7"))
 
 
 def run():
@@ -56,6 +63,7 @@ def get_top():
         i += 1
 
     res.append(end_html())
+    print(''.join(res))
     return ''.join(res)
 
 
