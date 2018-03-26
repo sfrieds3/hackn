@@ -51,9 +51,12 @@ def get_top():
     stories = top_story_list.text.split(", ")
 
     while i < num_stories:
-        url = get_url(stories[i])
+        url = get_api_url(stories[i])
         story = requests.get(url).json()
-        res.append(text_html(story.get('title')))
+        title = story.get('title')
+        # TODO: create new css class, make title a link to post on HN
+        #       HN url: https://news.ycombinator.com/item?id=<id>
+        res.append(text_html(title))
         try:
             res.append(link_html(story.get('url'), story.get('url')))
         except TypeError:
@@ -67,11 +70,16 @@ def get_top():
     return ''.join(res)
 
 
-def get_url(item):
+def get_api_url(item):
     base_url = 'https://hacker-news.firebaseio.com/v0/item/'
     postfix = '.json?print=pretty'
     item_number = trim_id(str(item))
     return base_url + item_number + postfix
+
+
+def get_hn_url(item):
+    base_url = 'https://news.ycombinator.com/item?id='
+    return base_url + item
 
 
 def print_comments(story):
@@ -84,7 +92,7 @@ def print_comments(story):
         try:
             print("comment_id: ", comment_id)
             print("comment[i]:", comment_id[i])
-            url = get_url(comment_id[i])
+            url = get_api_url(comment_id[i])
             comment = requests.get(url).json()
             print(comment.get('text'))
         except IndexError:
