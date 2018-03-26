@@ -31,7 +31,7 @@ class handler_class(BaseHTTPRequestHandler):
             self.send_header('Content-type', 'text/css')
             self.end_headers()
             with open('./style.css', 'r') as file:
-                self.wfile.write(bytes(file.read(), "utf7"))
+                self.wfile.write(bytes(file.read(), "utf8"))
 
 
 def run():
