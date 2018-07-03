@@ -56,6 +56,8 @@ def get_top():
         'https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty')
     stories = top_story_list.text.split(", ")
 
+    # TODO: use queue of worker threads for this
+    # see https://docs.python.org/3/library/queue.html
     while i < num_stories:
         url = get_api_url(stories[i])
         story = requests.get(url).json()
