@@ -1,11 +1,11 @@
 #! /usr/bin/python3
+from html import *
+from http.server import BaseHTTPRequestHandler, HTTPServer
 import re
 import requests
 import sys
 import time
 import webbrowser
-from html import *
-from http.server import BaseHTTPRequestHandler, HTTPServer
 
 
 # number of stories to retrieve, defaults to 30
