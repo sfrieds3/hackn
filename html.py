@@ -29,25 +29,24 @@ def link_html(address, name):
 
     return ''.join(res)
 
-# def text_html(s):
-#     res = []
-#     res.append('<p>')
-#     res.append(s)
-#     res.append('</p>')
-#     return ''.join(res)
-
-
 def text_html(s):
-    print("text_html (s): " + s)
     res = []
-
-    res.append('<a href="')
-    res.append(s)
-    res.append('" class="title"')
-    res.append('>')
     res.append('<p>')
     res.append(s)
     res.append('</p>')
-    res.append('</a>')
-
     return ''.join(res)
+
+
+# def text_html(name, link):
+#     res = []
+
+#     res.append('<a href="')
+#     res.append(link)
+#     res.append('" class="title"')
+#     res.append('>')
+#     res.append('<p>')
+#     res.append(name)
+#     res.append('</p>')
+#     res.append('</a>')
+
+#     return ''.join(res)
