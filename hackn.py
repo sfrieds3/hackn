@@ -1,10 +1,11 @@
 #! /usr/bin/python3
-import requests
-import time
-import re
-import sys
 from html import *
 from http.server import BaseHTTPRequestHandler, HTTPServer
+import re
+import requests
+import sys
+import time
+import webbrowser
 
 
 # number of stories to retrieve, defaults to 30
@@ -35,9 +36,14 @@ class handler_class(BaseHTTPRequestHandler):
 
 
 def run():
-    server_address = ('127.0.0.1', 9090)
+    server_address = ('127.0.0.1', 5150)
     httpd = HTTPServer(server_address, handler_class)
     httpd.serve_forever()
+
+
+def open_web_browser():
+    webbrowser.open_new('http://127.0.0.1:5150')
+    # webbrowser.open('.'.join(server_address))
 
 
 def get_top():
@@ -50,12 +56,15 @@ def get_top():
         'https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty')
     stories = top_story_list.text.split(", ")
 
+    # TODO: use queue of worker threads for this
+    # see https://docs.python.org/3/library/queue.html
     while i < num_stories:
         url = get_api_url(stories[i])
         story = requests.get(url).json()
         title = story.get('title')
         # TODO: create new css class, make title a link to post on HN
         #       HN url: https://news.ycombinator.com/item?id=<id>
+        # res.append(text_html(title, get_api_url(title)))
         res.append(text_html(title))
         try:
             res.append(link_html(story.get('url'), story.get('url')))
@@ -110,5 +119,6 @@ if __name__ == "__main__":
             num_stories = int(sys.argv[1])
         except TypeError:
             print("Error, please enter a number.")
+    open_web_browser()
     run()
 
