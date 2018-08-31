@@ -2,7 +2,7 @@
 from html import *
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import re
-import requests
+import requests # dependency
 import sys
 import time
 import webbrowser
@@ -121,4 +121,3 @@ if __name__ == "__main__":
             print("Error, please enter a number.")
     open_web_browser()
     run()
-
