@@ -9,9 +9,9 @@ import webbrowser
 
 
 # number of stories to retrieve, defaults to 30
-num_stories = 30
+NUM_STORIES = 30
 # num comments to retrieve
-num_comments = 5
+NUM_COMMENTS = 5
 
 
 class handler_class(BaseHTTPRequestHandler):
@@ -48,7 +48,7 @@ def open_web_browser():
 
 def get_top():
     i = 0
-    global num_stories
+    global NUM_STORIES
     res = []
     res.append(init_html())
 
@@ -58,7 +58,7 @@ def get_top():
 
     # TODO: use queue of worker threads for this
     # see https://docs.python.org/3/library/queue.html
-    while i < num_stories:
+    while i < NUM_STORIES:
         url = get_api_url(stories[i])
         story = requests.get(url).json()
         title = story.get('title')
@@ -93,11 +93,11 @@ def get_hn_url(item):
 
 def print_comments(story):
     i = 0
-    global num_comments
+    global NUM_COMMENTS
 
     comment_id = story.get('kids')
 
-    while i < num_comments:
+    while i < NUM_COMMENTS:
         try:
             print("comment_id: ", comment_id)
             print("comment[i]:", comment_id[i])
@@ -116,7 +116,7 @@ def trim_id(n):
 if __name__ == "__main__":
     if len(sys.argv) > 1:
         try:
-            num_stories = int(sys.argv[1])
+            NUM_STORIES = int(sys.argv[1])
         except TypeError:
             print("Error, please enter a number.")
     open_web_browser()
