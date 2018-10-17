@@ -8,6 +8,8 @@ import time
 import webbrowser
 
 
+# default server address
+SERVER_ADDRESS = ('127.0.0.1', 5150)
 # number of stories to retrieve, defaults to 30
 NUM_STORIES = 30
 # num comments to retrieve
@@ -36,14 +38,13 @@ class handler_class(BaseHTTPRequestHandler):
 
 
 def run():
-    server_address = ('127.0.0.1', 5150)
-    httpd = HTTPServer(server_address, handler_class)
+    httpd = HTTPServer(SERVER_ADDRESS, handler_class)
     httpd.serve_forever()
 
 
 def open_web_browser():
-    webbrowser.open_new('http://127.0.0.1:5150')
-    # webbrowser.open('.'.join(server_address))
+    server_address = "http://" + SERVER_ADDRESS[0] + ":" + str(SERVER_ADDRESS[1])
+    webbrowser.open_new(server_address)
 
 
 def get_top():
