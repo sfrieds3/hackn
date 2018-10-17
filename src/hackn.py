@@ -54,10 +54,10 @@ def get_top():
     res.append(init_html())
 
     top_story_list = requests.get(
-        'https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty')
+            'https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty')
     stories = top_story_list.text.split(", ")
 
-    # TODO: use queue of worker threads for this
+    # TODO: use queue of threads for this
     # see https://docs.python.org/3/library/queue.html
     while i < NUM_STORIES:
         url = get_api_url(stories[i])
