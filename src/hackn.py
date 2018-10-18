@@ -9,7 +9,7 @@ import webbrowser
 
 
 # default server address
-SERVER_ADDRESS = ('127.0.0.1', 5150)
+SERVER_ADDRESS = ('127.0.0.1', 8080)
 # number of stories to retrieve, defaults to 30
 NUM_STORIES = 30
 # num comments to retrieve
@@ -72,7 +72,7 @@ def get_top():
         except TypeError:
             pass
         # print_comments(story)
-        time.sleep(0.1)
+        # time.sleep(0.01) # to stay under rate limit
         i += 1
 
     res.append(end_html())
