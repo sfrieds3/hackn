@@ -98,11 +98,8 @@ def print_comments(story):
     try:
         for comment in comments:
             comment = requests.get(get_api_url(comment)).json()
-            try:
-                res.append(comment_html(comment.get('text')))
-            except TypeError:
-                pass
-    except NoneType:
+            res.append(comment_html(comment.get('text')))
+    except TypeError:
         pass
 
     print(''.join(res))
