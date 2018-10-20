@@ -65,11 +65,6 @@ def get_top():
 
         # TODO: create new css class, make title a link to post on HN
         #       HN url: https://news.ycombinator.com/item?id=<id>
-        # res.append(add_name(title))
-        # try:
-            # res.append(link_html(story.get('url'), story.get('url')))
-        # except TypeError:
-            # pass
         try:
             res.append(text_html(story.get('url'), story.get('title')))
         except TypeError:
