@@ -25,7 +25,7 @@ def end_html():
     return ''.join(res)
 
 
-def text_html(address, name):
+def story_html(address, name):
     res = []
     res.append('\t\t\t')
     res.append('<p>')
@@ -39,8 +39,18 @@ def text_html(address, name):
     res.append(address)
     res.append(')')
     res.append('</a>')
-    res.append('\n')
+    res.append('\n\t\t\t')
     res.append('</p>')
     res.append('\n')
+
+    return ''.join(res)
+
+
+def comment_html(comment):
+    res = []
+    res.append('\t\t\t\t')
+    res.append('<p2>')
+    res.append(comment)
+    res.append('</p2>')
 
     return ''.join(res)

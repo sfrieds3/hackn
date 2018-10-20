@@ -12,8 +12,6 @@ import webbrowser
 SERVER_ADDRESS = ('127.0.0.1', 8080)
 # number of stories to retrieve, defaults to 30
 NUM_STORIES = 30
-# num comments to retrieve
-NUM_COMMENTS = 5
 
 
 class handler_class(BaseHTTPRequestHandler):
@@ -66,10 +64,10 @@ def get_top():
         # TODO: create new css class, make title a link to post on HN
         #       HN url: https://news.ycombinator.com/item?id=<id>
         try:
-            res.append(text_html(story.get('url'), story.get('title')))
+            res.append(story_html(story.get('url'), story.get('title')))
         except TypeError:
             pass
-        # print_comments(story)
+        print_comments(story)
         # time.sleep(0.01) # to stay under rate limit
         i += 1
 
@@ -91,21 +89,24 @@ def get_hn_url(item):
 
 
 def print_comments(story):
-    i = 0
-    global NUM_COMMENTS
+    res = []
 
-    comment_id = story.get('kids')
+    comments = story.get('kids')
 
-    while i < NUM_COMMENTS:
-        try:
-            print("comment_id: ", comment_id)
-            print("comment[i]:", comment_id[i])
-            url = get_api_url(comment_id[i])
-            comment = requests.get(url).json()
-            print(comment.get('text'))
-        except IndexError:
-            pass
-        i = i + 1
+    print(comments)
+
+    try:
+        for comment in comments:
+            comment = requests.get(get_api_url(comment)).json()
+            try:
+                res.append(comment_html(comment.get('text')))
+            except TypeError:
+                pass
+    except NoneType:
+        pass
+
+    print(''.join(res))
+    return ''.join(res)
 
 
 def trim_id(n):
