@@ -40,7 +40,8 @@ def link_html(address, name):
 
     return ''.join(res)
 
-def text_html(string):
+
+def add_name(string):
     res = []
     res.append('\t\t\t')
     res.append('<p>')
@@ -50,16 +51,22 @@ def text_html(string):
     return ''.join(res)
 
 
-# def text_html(name, link):
-#     res = []
+def text_html(address, name):
+    res = []
+    res.append('\t\t\t')
+    res.append('<p>')
+    res.append(name)
+    res.append('\n\t\t\t')
+    res.append('<a href="')
+    res.append(address)
+    res.append('\n\t\t\t')
+    res.append('"class="link"')
+    res.append('>(')
+    res.append(address)
+    res.append(')')
+    res.append('</a>')
+    res.append('\n')
+    res.append('</p>')
+    res.append('\n')
 
-#     res.append('<a href="')
-#     res.append(link)
-#     res.append('" class="title"')
-#     res.append('>')
-#     res.append('<p>')
-#     res.append(name)
-#     res.append('</p>')
-#     res.append('</a>')
-
-#     return ''.join(res)
+    return ''.join(res)
