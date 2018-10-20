@@ -52,7 +52,6 @@ def get_top():
     global NUM_STORIES
     res = []
     res.append(init_html())
-
     top_story_list = requests.get(
             'https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty')
     stories = top_story_list.text.split(", ")
@@ -63,6 +62,7 @@ def get_top():
         url = get_api_url(stories[i])
         story = requests.get(url).json()
         title = story.get('title')
+
         # TODO: create new css class, make title a link to post on HN
         #       HN url: https://news.ycombinator.com/item?id=<id>
         # res.append(text_html(title, get_api_url(title)))
