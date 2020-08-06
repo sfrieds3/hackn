@@ -1,11 +1,12 @@
 #! /usr/bin/python3
+
 from html import *
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import re
-import requests # dependency
 import sys
 import time
 import webbrowser
+import requests  # dependency
 
 
 # default server address
@@ -23,7 +24,6 @@ class handler_class(BaseHTTPRequestHandler):
 
         if self.path == "/":
             print("true")
-            self.send_header('Content-type', 'text/html')
             self.end_headers()
             out = get_top()
             self.wfile.write(bytes(out, "utf8"))
