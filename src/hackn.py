@@ -1,12 +1,11 @@
 #! /usr/bin/python3
 
-from html import *
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import re
 import sys
-import time
 import webbrowser
 import requests  # dependency
+from .html import init_html, story_html, end_html, comment_html
 
 
 # default server address
@@ -107,7 +106,7 @@ def print_comments(story):
 
 
 def trim_id(n):
-    return re.sub("\D", "", n)
+    return re.sub(r'\D', '', n)
 
 
 if __name__ == "__main__":
