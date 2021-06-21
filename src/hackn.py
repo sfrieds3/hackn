@@ -7,7 +7,6 @@ import webbrowser
 import requests  # dependency
 from .html import init_html, story_html, end_html, comment_html
 
-
 # default server address
 SERVER_ADDRESS = ('127.0.0.1', 8080)
 # number of stories to retrieve, defaults to 30
@@ -40,7 +39,8 @@ def run():
 
 
 def open_web_browser():
-    server_address = "http://" + SERVER_ADDRESS[0] + ":" + str(SERVER_ADDRESS[1])
+    server_address = "http://" + SERVER_ADDRESS[0] + ":" + str(
+        SERVER_ADDRESS[1])
     webbrowser.open_new(server_address)
 
 
@@ -50,7 +50,7 @@ def get_top():
     res = []
     res.append(init_html())
     top_story_list = requests.get(
-            'https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty')
+        'https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty')
     stories = top_story_list.text.split(", ")
 
     # TODO: use queue of threads for this
