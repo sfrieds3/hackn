@@ -7,10 +7,11 @@ import webbrowser
 import requests  # dependency
 import logging
 
-from html import init_html, story_html, end_html, comment_html
+from gen_html import init_html, story_html, end_html, comment_html
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 logger = logging.getLogger(__name__)
+
 
 class handler_class(BaseHTTPRequestHandler):
     def do_GET(self):
