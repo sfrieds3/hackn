@@ -13,7 +13,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 logger = logging.getLogger(__name__)
 
 
-class handler_class(BaseHTTPRequestHandler):
+class HandlerClass(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
 
@@ -35,7 +35,7 @@ class handler_class(BaseHTTPRequestHandler):
 
 def run(server, port, num_stories):
     server_address = tuple([server, port])
-    httpd = HTTPServer(server_address, handler_class)
+    httpd = HTTPServer(server_address, HandlerClass)
     httpd.serve_forever()
 
 
