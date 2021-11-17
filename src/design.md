@@ -1,6 +1,4 @@
-// Hackn layout:
-
-# Welcome, <name>!
+# Welcome, \<name\>!
 
 **<title 1>** - <link 1>
 <num comments>
