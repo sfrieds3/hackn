@@ -10,7 +10,7 @@ import logging
 from gen_html import init_html, story_html, end_html, comment_html
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
-logger = logging.getLogger(__name_)
+logger = logging.getLogger(__name__)
 _log_handler = logging.StreamHandler(stream=sys.stdout)
 logger.addHandler(_log_handler)
 logger.setLevel(logging.INFO)
