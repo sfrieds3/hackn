@@ -4,7 +4,7 @@ import argparse
 import re
 import sys
 import webbrowser
-import requests  # dependency
+import requests
 import logging
 
 from gen_html import init_html, story_html, end_html, comment_html
@@ -33,21 +33,19 @@ class HandlerClass(BaseHTTPRequestHandler):
                 self.wfile.write(bytes(file.read(), "utf8"))
 
 
-def run(server, port, num_stories):
-    server_address = tuple([server, port])
-    httpd = HTTPServer(server_address, HandlerClass)
+def run(server: str, port: int, num_stories):
+    httpd = HTTPServer((server, port), HandlerClass)
     httpd.serve_forever()
 
 
-def open_web_browser(server, port):
-    server_address = 'http://' + server + ':' + port
+def open_web_browser(server: str, port: int):
+    server_address = 'https://' + server + ':' + str(port)
     webbrowser.open_new(server_address)
 
 
-def get_top(num_stories):
+def get_top(num_stories: int):
     i = 0
-    res = []
-    res.append(init_html())
+    res = [init_html()]
     top_story_list = requests.get(
         "https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty"
     )
@@ -106,7 +104,7 @@ def print_comments(story):
     return "".join(res)
 
 
-def trim_id(n):
+def trim_id(n: str):
     return re.sub(r"\D", "", n)
 
 
@@ -140,5 +138,5 @@ if __name__ == "__main__":
     args = process_args()
     log_level = logging.ERROR if args.verbose else logging.INFO
     logging.basicConfig(level=log_level)
-    open_web_browser(args.server, str(args.port))
+    open_web_browser(args.server, args.port)
     run(args.server, args.port, args.num_stories)
