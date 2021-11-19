@@ -11,17 +11,14 @@ from gen_html import init_html, story_html, end_html, comment_html
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 logger = logging.getLogger(__name__)
-_log_handler = logging.StreamHandler(stream=sys.stdout)
-logger.addHandler(_log_handler)
-logger.setLevel(logging.INFO)
 
 
 class HandlerClass(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
 
-        logging.info("received new request")
-        logging.info("path: " + self.path)
+        logger.info("received new request")
+        logger.info("path: " + self.path)
 
         if self.path == "/":
             logger.info("true")
@@ -137,9 +134,15 @@ SERVER_ADDRESS = ("127.0.0.1", 8080)
     return parser.parse_args()
 
 
+def init_logging(verbose):
+    log_level = logging.ERROR if args.verbose else logging.INFO
+    _log_handler = logging.StreamHandler(stream=sys.stdout)
+    logger.addHandler(_log_handler)
+    logger.setLevel(log_level)
+
+
 if __name__ == "__main__":
     args = process_args()
-    log_level = logging.ERROR if args.verbose else logging.INFO
-    logging.basicConfig(level=log_level)
+    init_logging(args.verbose)
     open_web_browser(args.server, args.port)
     run(args.server, args.port, args.num_stories)
